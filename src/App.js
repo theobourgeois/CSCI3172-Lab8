@@ -2,10 +2,9 @@ import "./App.css";
 import { Routes, Route, Link, useParams, useNavigate } from "react-router-dom";
 import { useState, useMemo } from "react";
 
-const NAME_REGEX = /^[a-zA-Zé]+$/;
-const PASSWORD_REGEX =
-  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#\$%\^&\*]).{8,}$/;
-const EMAIL_REGEX = /^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,4}$/;
+const NAME_REGEX = /[a-zA-Zé]+/;
+const PASSWORD_REGEX = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#\$%\^&\*]).{8,}/;
+const EMAIL_REGEX = /[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,4}/;
 
 // function that returns the users from the local storage
 function getUsers() {
@@ -32,19 +31,19 @@ function Homepage() {
     console.log(data);
 
     // first name should be all letters
-    if (!data.firstName.trim().match(NAME_REGEX)) {
+    if (!NAME_REGEX.test(data.firstName.trim())) {
       setError("First name should only contain letters");
       return;
     }
 
     // last name should be all letters
-    if (!data.lastName.trim().match(NAME_REGEX)) {
+    if (!NAME_REGEX.test(data.lastName.trim())) {
       setError("Last name should only contain letters");
       return;
     }
 
     // password contains at least one number, 1 uppercase letter, 1 lowercase letter, and 1 special character
-    if (!data.password.match(PASSWORD_REGEX)) {
+    if (!PASSWORD_REGEX.test(data.password)) {
       setError(
         "Password should contain at least one number, 1 uppercase letter, 1 lowercase letter, and 1 special character",
       );
@@ -52,7 +51,7 @@ function Homepage() {
     }
 
     // email should be in the correct format
-    if (!data.email.trim().match(EMAIL_REGEX)) {
+    if (!EMAIL_REGEX.test(data.email.trim())) {
       setError("Email is not in the correct format");
       return;
     }
